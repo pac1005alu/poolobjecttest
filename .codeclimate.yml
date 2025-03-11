@@ -1,0 +1,46 @@
+version: "2"
+checks:
+  argument-count:
+    enabled: true
+  class-complexity:
+    enabled: true
+  file-lines:
+    enabled: true
+  method-complexity:
+    enabled: true
+  return-statements:
+    enabled: true
+  similar-code:
+    enabled: true
+
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        java:
+          threshold: 6  # Número de líneas para detectar código duplicado
+  eslint:
+    enabled: false  # Deshabilitado ya que es para JavaScript
+  fixme:
+    enabled: true  # Detecta comentarios tipo TODO, FIXME, etc.
+  javac:
+    enabled: true  # Compila el código para encontrar errores
+  pmd:
+    enabled: true  # Reglas de código para Java
+  checkstyle:
+    enabled: true  # Estilo de código en Java
+  security:
+    enabled: true  # Análisis de seguridad para Java
+
+ratings:
+  paths:
+    - "**.java"
+
+exclude_patterns:
+  - "test/**"  # Excluye pruebas si no quieres evaluarlas
+  - "vendor/**"
+  - "node_modules/**"
+  - "build/**"
+  - "out/**"
+
