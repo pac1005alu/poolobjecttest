@@ -1,46 +1,75 @@
 version: "2"
+
 checks:
   argument-count:
     enabled: true
-  class-complexity:
+  boolean-parameter:
     enabled: true
-  file-lines:
+  class-coupling:
     enabled: true
-  method-complexity:
+  cyclomatic-complexity:
     enabled: true
-  return-statements:
+  duplication:
+    enabled: true
+  method-count:
+    enabled: true
+  nested-control-flow:
+    enabled: true
+  return-count:
     enabled: true
   similar-code:
     enabled: true
 
-engines:
-  duplication:
+plugins:
+  javac:
+    enabled: true
+  checkstyle:
     enabled: true
     config:
-      languages:
-        java:
-          threshold: 6  # Número de líneas para detectar código duplicado
-  eslint:
-    enabled: false  # Deshabilitado ya que es para JavaScript
-  fixme:
-    enabled: true  # Detecta comentarios tipo TODO, FIXME, etc.
-  javac:
-    enabled: true  # Compila el código para encontrar errores
+      config_file: "/google_checks.xml"
   pmd:
-    enabled: true  # Reglas de código para Java
-  checkstyle:
-    enabled: true  # Estilo de código en Java
-  security:
-    enabled: true  # Análisis de seguridad para Java
-
-ratings:
-  paths:
-    - "**.java"
+    enabled: true
+    config:
+      rulesets:
+        - "java-basic"
+        - "java-braces"
+        - "java-clone"
+        - "java-codesize"
+        - "java-comments"
+        - "java-controversial"
+        - "java-design"
+        - "java-empty"
+        - "java-finalizers"
+        - "java-imports"
+        - "java-j2ee"
+        - "java-javabeans"
+        - "java-junit"
+        - "java-logging-java"
+        - "java-migrating"
+        - "java-naming"
+        - "java-optimizations"
+        - "java-typeresolution"
+        - "java-unnecessary"
+        - "java-unusedcode"
+  eslint:
+    enabled: true
+  duplication:
+    enabled: true
 
 exclude_patterns:
-  - "test/**"  # Excluye pruebas si no quieres evaluarlas
-  - "vendor/**"
-  - "node_modules/**"
-  - "build/**"
-  - "out/**"
+  - "**/build/**"
+  - "**/out/**"
+  - "**/target/**"
+  - "**/node_modules/**"
+  - "**/*.min.js"
 
+include_patterns:
+  - "**/*.java"
+  - "**/*.xml"
+  - "**/*.js"
+  - "**/*.json"
+  - "**/*.properties"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/test/**"
+  - "**/tests/**"
