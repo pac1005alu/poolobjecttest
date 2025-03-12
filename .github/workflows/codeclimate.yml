@@ -1,0 +1,46 @@
+name: Code Climate Coverage
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up JDK for Maven
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+
+      # Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Build and test with Maven
+      - name: Run tests with Maven
+        run: mvn clean test
+
+      # Install Code Climate Test Reporter
+      - name: Install Code Climate Test Reporter
+        run: npm install -g codeclimate-test-reporter
+
+      # Upload the code coverage report to Code Climate
+      - name: Upload coverage to Code Climate
+        run: codeclimate-test-reporter upload --format lcov --input target/jacoco-coverage/jacoco.xml
+
